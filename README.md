@@ -57,6 +57,6 @@ You will find on Klave's github an example of a simple UI to target your chat ro
 
 This library is created by [Klave](https://klave.com) and [Secretarium](https://secretarium.com) team members, with contributions from:
 
-- Damian Tziamtzis
+- Damian Tziamtzis ([@damtzi](https://github.com/damtzi)) - [Klave](https://klave.com) | [Secretarium](https://secretarium.com)
 - Nicolas Marie ([@Akhilleus20](https://github.com/Akhilleus20)) - [Klave](https://klave.com) | [Secretarium](https://secretarium.com)
 - Etienne Bosse ([@Gosu14](https://github.com/Gosu14)) - [Klave](https://klave.com) | [Secretarium](https://secretarium.com)
