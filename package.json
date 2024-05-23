@@ -1,0 +1,21 @@
+{
+    "name": "chat-room",
+    "description": "This is a honest application for the Klave Network",
+    "author": "Akhilleus20 <nicomarie@gmail.com> (https://github.com/Akhilleus20)",
+    "version": "0.0.0",
+    "license": "MIT",
+    "repository": "https://github.com/Akhilleus20/chat-room",
+    "scripts": {
+        "build": "stac ."
+    },
+    "devDependencies": {
+        "@klave/sdk": "0.11.0",
+        "as-base64": "0.2.0",
+        "assemblyscript": "^0.27.26",
+        "assemblyscript-regex": "1.6.4",
+        "path-complete-extname": "1.0.0",
+        "tslib": "^2.6.2",
+        "visitor-as": "^0.11.4",
+        "zod": "^3.22.4"
+    }
+}
