@@ -1,6 +1,4 @@
 import { Context } from "@klave/sdk";
-import { RegExp, Match } from "assemblyscript-regex";
-import { Axis, AxisMessage } from "./types";
 
 export function convertToU8Array(input: Uint8Array): u8[] {
     let ret: u8[] = [];
