@@ -1,10 +1,10 @@
 <a href="https://klave.com/">
-  <img alt="Klave - Chat room" src="https://klave.com/images/marketplace/chat-room.svg">
-  <h1 align="center">Chat room - Discuss with full privacy while leveraging programmability through chatbots.</h1>
+  <img alt="Klave - Chat room" src="https://klave.com/images/marketplace/klave-chat-room.svg">
+  <h1 align="center">Chat room - Privacy and Programmability.</h1>
 </a>
 
 <p align="center">
-  An implementation on Klave of a chat room concept which allows full privacy, while embedding chat bots.
+  An implementation on Klave of a chat room concept which provides full privacy and integrity by design, while allowing programmers to build chat bots to provide new business functionalities.
 </p>
 
 <p align="center">
@@ -20,13 +20,21 @@
 
 ## Description
 
-Leverage Klave's privacy for a chat room implementation.
+This chat room template provides an app which will allow the basic functionalities of a chat room while preserving the privacy and integrity through Klave capabilities:
+- Register your users and idenfy them
+- Create a chat room and manage its users
+- Discuss through multiple chat rooms with live notifications
+
+On top of these basic functionalities, it also showcases the use of bots that can enable another level of business capabilities, to provide a "chat with a brain" while preserving the same level of privacy and integrity.
 
   
 ## Features
 
+- **Register your user:**
+- **Create chat room:**
+- **Manage users of chat rooms:**
 - **Discuss:**
-- **Chat bots:**
+- **Create new business functionalities through your own Chat bots:**
 
 ## Deploy Your Own
 
@@ -48,10 +56,12 @@ This will create the .wasm file in the ./klave folder.
 
 ## Test Locally
 
-You will find on Klave's github an example of a simple UI to target your chat room app deployed using this template:
-- Clone this repo:
-- Change the setting VITE_APP_KLAVE_CONTRACT in the .env file of chat room app with the address of your honest application
-- Run `nx serve chat-room` for a dev server. Navigate to <http://localhost:4200/>.
+Alongside the Klave Chat Room app, there is a simple UI app showcasing its usage. The UI is written with [React](https://react.dev/), [React Router](https://reactrouter.com/en/main) and [TypeScript](https://www.typescriptlang.org/docs/). To run the app, follow the steps:
+- Clone this repo
+- Navigate to the UI app folder `cd /apps/ui`
+- Run `npm i` to install all the dependancies
+- Change the variables `VITE_APP_KLAVE_CONTRACT` in the .env.local file of chat room app with the address of your honest application
+- Run `npm run dev` to spin up a dev server
 
 ## Authors
 
