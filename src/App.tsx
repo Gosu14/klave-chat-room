@@ -1,8 +1,4 @@
-import {
-    createBrowserRouter,
-    RouterProvider,
-    useRouteError
-} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import {
     Settings,
     loader as SettingsLoader,
@@ -17,25 +13,17 @@ import { RootLayout } from '@/layouts/root-layout';
 import { HelmetProvider } from 'react-helmet-async';
 import { Auth } from '@/pages/auth';
 import { SignIn, action as SignUserIn } from '@/pages/auth/keyname';
+import { ErrorPage } from '@/pages/error-page';
 import { AuthLayout } from '@/layouts/auth-layout';
 import secretariumHandler from './utils/secretarium-handler';
 
 secretariumHandler.initialize();
 
-const ErrorBoundary = () => {
-    const error = useRouteError();
-    console.error(error);
-    return (
-        <div className="flex h-screen items-center justify-center">
-            Whoops! Something went wrong!
-        </div>
-    );
-};
-
 const router = createBrowserRouter([
     {
         path: '/',
         element: <RootLayout />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
@@ -66,6 +54,7 @@ const router = createBrowserRouter([
     {
         path: '/auth',
         element: <AuthLayout />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
@@ -74,14 +63,12 @@ const router = createBrowserRouter([
             {
                 path: 'register',
                 element: <Register />,
-                action: CreateUser,
-                errorElement: <ErrorBoundary />
+                action: CreateUser
             },
             {
                 path: ':keyname',
                 element: <SignIn />,
-                action: SignUserIn,
-                errorElement: <ErrorBoundary />
+                action: SignUserIn
             }
         ]
     }
