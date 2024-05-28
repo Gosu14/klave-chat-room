@@ -8,7 +8,7 @@
             "name": "chat-room",
             "description": "This is a honest application for the Klave Network",
             "version": "0.0.0",
-            "rootDir": "/apps/chat-room"
+            "rootDir": "/happ"
         }
     ]
 }
