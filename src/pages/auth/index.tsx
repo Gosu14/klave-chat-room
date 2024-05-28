@@ -37,9 +37,9 @@ export const Auth = () => {
             <div className="flex flex-col items-center gap-4">
                 <h1 className="text-2xl font-semibold">Chat App</h1>
                 {keyPairs.length > 0 ? (
-                    <div className="flex flex-col items-center gap-4">
+                    <div className="flex w-full flex-col items-center gap-4">
                         <p className="text-center italic">Select a key to sign in.</p>
-                        <div className="flex w-80 flex-col gap-2">
+                        <div className="flex w-full flex-col gap-2">
                             {keyPairs.map((keyPair, id) => (
                                 <div className="flex gap-2" key={id}>
                                     <Link to={`/auth/${id + 1}`} state={{ keyPair }} className="w-full">
