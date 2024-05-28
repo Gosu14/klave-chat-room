@@ -32,13 +32,7 @@ export type ChatRoomCreationInput = {
 export type ChatRoomResult = {
     success: boolean;
     name: string;
-    chatRoomIdentification: string;
-};
-
-export type UserResult = {
-    success: boolean;
-    user: User;
-    exception?: string;
+    chatRoomId: string;
 };
 
 export type UserList = {
@@ -47,21 +41,41 @@ export type UserList = {
     message?: string;
 };
 
-export type TransactionResult = {
-    success: boolean;
-    exception?: string;
-};
+export type TransactionResult =
+    | {
+          success: true;
+          message: string;
+      }
+    | {
+          success: false;
+          exception: string;
+      };
 
 export type ActionData = {
     error: boolean;
     message?: string;
 };
 
+export type ChatRoomSetting = {
+    name: string;
+    users: string[];
+};
+
+export type UserResult =
+    | {
+          success: true;
+          user: User;
+      }
+    | {
+          success: false;
+          exception: string;
+      };
+
 export type CreateChatRoomResult =
     | {
           success: true;
-          chatRoomIdentification: string;
-          name: string;
+          chatRoomId: string;
+          chatRoomSetting: ChatRoomSetting;
       }
     | {
           success: false;
@@ -77,3 +91,25 @@ export type ChatResult =
           success: false;
           exception: string;
       };
+
+export type GetChatRoomResult =
+    | {
+          success: true;
+          chatRoomId: string;
+          chatRoomSetting: ChatRoomSetting;
+      }
+    | {
+          success: false;
+          exception: string;
+      };
+
+export type TransactionError = {
+    success: false;
+    exception: string;
+}
+
+export type EditChatLoader = {
+    id: string;
+    name: string;
+    users: string[];
+};

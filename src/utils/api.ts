@@ -7,7 +7,8 @@ import {
     ChatResult,
     ChatMessageInput,
     ChatRoomCreationInput,
-    CreateChatRoomResult
+    CreateChatRoomResult,
+    GetChatRoomResult
 } from '@/utils/types';
 
 export const klaveContract = import.meta.env.VITE_APP_KLAVE_CONTRACT;
@@ -77,6 +78,24 @@ export const listUsers = async (): Promise<UserList> =>
 export const getChat = async (chatRoomId: string): Promise<ChatResult> =>
     waitForConnection()
         .then(() => secretariumHandler.request(klaveContract, 'getChat', { chatRoomId }, `getChat-${Math.random()}`))
+        .then(
+            (tx) =>
+                new Promise((resolve, reject) => {
+                    tx.onResult((result) => {
+                        resolve(result);
+                    });
+                    tx.onError((error) => {
+                        reject(error);
+                    });
+                    tx.send().catch(reject);
+                })
+        );
+
+export const getChatRoom = async (chatRoomId: string): Promise<GetChatRoomResult> =>
+    waitForConnection()
+        .then(() =>
+            secretariumHandler.request(klaveContract, 'getChatRoom', { chatRoomId }, `getChatRoom-${Math.random()}`)
+        )
         .then(
             (tx) =>
                 new Promise((resolve, reject) => {
