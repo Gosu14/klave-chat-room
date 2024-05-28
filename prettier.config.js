@@ -4,7 +4,8 @@ const config = {
     semi: true,
     singleQuote: true,
     tabWidth: 4,
-    trailingComma: 'none'
+    trailingComma: 'none',
+    printWidth: 120
 };
 
 export default config;
