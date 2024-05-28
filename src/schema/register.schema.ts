@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { zPhoneNumber } from '@/utils/zPhoneNumber';
 
-export const formSchema = z
+export const registerSchema = z
     .object({
         username: z
             .string()
@@ -25,4 +25,4 @@ export const formSchema = z
         path: ['confirmPassword'] // path of error
     });
 
-export type FormType = z.infer<typeof formSchema>;
+export type RegisterFormType = z.infer<typeof registerSchema>;

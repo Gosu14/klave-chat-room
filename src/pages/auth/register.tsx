@@ -18,15 +18,15 @@ import { Key, Utils } from '@secretarium/connector';
 import { setUser } from '@/utils/api';
 import { ActionData } from '@/utils/types';
 import { LOC_KEY } from '@/utils/constants';
-import { formSchema, FormType } from '@/schema/form.schema';
+import { registerSchema, RegisterFormType } from '@/schema/register.schema';
 import { urlToId } from '@/lib/utils';
 
 export const Register = () => {
     const result = useActionData() as ActionData;
     const submit = useSubmit();
 
-    const form = useForm<FormType>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<RegisterFormType>({
+        resolver: zodResolver(registerSchema),
         defaultValues: {
             username: '',
             email: '',
@@ -190,7 +190,7 @@ export const action: ActionFunction = async ({ request }) => {
         })
         .catch(console.error);
 
-    const { success, exception } = await setUser({
+    const result = await setUser({
         key: urlToId(base64key),
         username,
         email,
@@ -198,10 +198,10 @@ export const action: ActionFunction = async ({ request }) => {
         chatRooms: []
     });
 
-    if (!success) {
+    if (!result.success) {
         return {
             error: true,
-            message: exception
+            message: result.exception
         };
     }
 
