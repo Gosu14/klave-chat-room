@@ -11,7 +11,7 @@ import {
 } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
-import { Check, ChevronLeft } from 'lucide-react';
+import { Check, ChevronLeft, CircleAlert } from 'lucide-react';
 import { getChatRoom, isConnected } from '@/utils/api';
 import { urlToId } from '@/lib/utils';
 import { EditChatLoader } from '@/utils/types';
@@ -81,9 +81,9 @@ export const EditChat = () => {
                     </Button>
                     <div className="flex items-center gap-2">Editing chat: {state.chatRoomName}</div>
                 </div>
-                <div className="flex flex-col p-4">
+                <div className="flex h-full flex-col">
                     <Form {...form}>
-                        <ReactRouterForm onSubmit={form.handleSubmit(onSubmit)} className="max-w-80 space-y-4">
+                        <ReactRouterForm onSubmit={form.handleSubmit(onSubmit)} className="max-w-80 space-y-4 p-4">
                             <FormField
                                 control={form.control}
                                 name="name"
@@ -104,6 +104,19 @@ export const EditChat = () => {
                             </Button>
                         </ReactRouterForm>
                     </Form>
+                    <div className="mt-auto flex flex-col gap-4 bg-red-200 p-4">
+                        <h2 className="flex items-center gap-2 text-xl font-semibold text-red-800">
+                            <CircleAlert />
+                            Danger zone
+                        </h2>
+                        <p>
+                            The actions listed below are either destructrive, leading to a loss of data or a loss of
+                            permissions.
+                        </p>
+                        <Button className="max-w-80" variant="destructive">
+                            Leave chat room
+                        </Button>
+                    </div>
                 </div>
             </div>
         </>
