@@ -33,9 +33,7 @@ export const loader = async () => {
             message: 'Something went wrong'
         };
     }
-    const chats = await Promise.all(
-        user.chatRooms.map((chat) => getChat(chat))
-    );
+    const chats = await Promise.all(user.chatRooms.map((chat) => getChat(chat)));
 
     return {
         chats,

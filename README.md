@@ -21,20 +21,20 @@
 ## Description
 
 This chat room template provides an app which will allow the basic functionalities of a chat room while preserving the privacy and integrity through Klave capabilities:
-- Register your users and idenfy them
-- Create a chat room and manage its users
-- Discuss through multiple chat rooms with live notifications
+
+-   Register your users and idenfy them
+-   Create a chat room and manage its users
+-   Discuss through multiple chat rooms with live notifications
 
 On top of these basic functionalities, it also showcases the use of bots that can enable another level of business capabilities, to provide a "chat with a brain" while preserving the same level of privacy and integrity.
 
-  
 ## Features
 
-- **Register your user:**
-- **Create chat room:**
-- **Manage users of chat rooms:**
-- **Discuss:**
-- **Create new business functionalities through your own Chat bots:**
+-   **Register your user:**
+-   **Create chat room:**
+-   **Manage users of chat rooms:**
+-   **Discuss:**
+-   **Create new business functionalities through your own Chat bots:**
 
 ## Deploy Your Own
 
@@ -52,21 +52,23 @@ You can build your template into wasm locally, allowing you to validate the hash
 yarn install
 yarn build
 ```
+
 This will create the .wasm file in the ./klave folder.
 
 ## Test Locally
 
 Alongside the Klave Chat Room app, there is a simple UI app showcasing its usage. The UI is written with [React](https://react.dev/), [React Router](https://reactrouter.com/en/main) and [TypeScript](https://www.typescriptlang.org/docs/). To run the app, follow the steps:
-- Clone this repo
-- Navigate to the UI app folder `cd /apps/ui`
-- Run `npm i` to install all the dependancies
-- Change the variables `VITE_APP_KLAVE_CONTRACT` in the .env.local file of chat room app with the address of your honest application
-- Run `npm run dev` to spin up a dev server
+
+-   Clone this repo
+-   Navigate to the UI app folder `cd /apps/ui`
+-   Run `npm i` to install all the dependancies
+-   Change the variables `VITE_APP_KLAVE_CONTRACT` in the .env.local file of chat room app with the address of your honest application
+-   Run `npm run dev` to spin up a dev server
 
 ## Authors
 
 This library is created by [Klave](https://klave.com) and [Secretarium](https://secretarium.com) team members, with contributions from:
 
-- Damian Tziamtzis ([@damtzi](https://github.com/damtzi)) - [Klave](https://klave.com) | [Secretarium](https://secretarium.com)
-- Nicolas Marie ([@Akhilleus20](https://github.com/Akhilleus20)) - [Klave](https://klave.com) | [Secretarium](https://secretarium.com)
-- Etienne Bosse ([@Gosu14](https://github.com/Gosu14)) - [Klave](https://klave.com) | [Secretarium](https://secretarium.com)
+-   Damian Tziamtzis ([@damtzi](https://github.com/damtzi)) - [Klave](https://klave.com) | [Secretarium](https://secretarium.com)
+-   Nicolas Marie ([@Akhilleus20](https://github.com/Akhilleus20)) - [Klave](https://klave.com) | [Secretarium](https://secretarium.com)
+-   Etienne Bosse ([@Gosu14](https://github.com/Gosu14)) - [Klave](https://klave.com) | [Secretarium](https://secretarium.com)

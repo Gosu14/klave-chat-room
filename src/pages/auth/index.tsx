@@ -38,30 +38,17 @@ export const Auth = () => {
                 <h1 className="text-2xl font-semibold">Chat App</h1>
                 {keyPairs.length > 0 ? (
                     <div className="flex flex-col items-center gap-4">
-                        <p className="text-center italic">
-                            Select a key to sign in.
-                        </p>
+                        <p className="text-center italic">Select a key to sign in.</p>
                         <div className="flex w-80 flex-col gap-2">
                             {keyPairs.map((keyPair, id) => (
                                 <div className="flex gap-2" key={id}>
-                                    <Link
-                                        to={`/auth/${id + 1}`}
-                                        state={{ keyPair }}
-                                        className="w-full"
-                                    >
-                                        <Button
-                                            variant="outline"
-                                            className="w-full"
-                                        >
+                                    <Link to={`/auth/${id + 1}`} state={{ keyPair }} className="w-full">
+                                        <Button variant="outline" className="w-full">
                                             <KeyRound className="mr-2 h-4 w-4" />
                                             {keyPair.name}
                                         </Button>
                                     </Link>
-                                    <Button
-                                        variant="outline"
-                                        size="icon"
-                                        onClick={() => downloadKey(keyPair)}
-                                    >
+                                    <Button variant="outline" size="icon" onClick={() => downloadKey(keyPair)}>
                                         <Download className="h-4 w-4" />
                                     </Button>
                                 </div>
@@ -70,10 +57,7 @@ export const Auth = () => {
                     </div>
                 ) : (
                     <div className="flex flex-col gap-4">
-                        <p className="text-center italic">
-                            There are currently no accounts setup on this
-                            device.
-                        </p>
+                        <p className="text-center italic">There are currently no accounts setup on this device.</p>
                     </div>
                 )}
                 <div className="w-full">

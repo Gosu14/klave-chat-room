@@ -1,8 +1,4 @@
-import {
-    idToUrl,
-    unixToDateTime,
-    getCurrentDevicePublicKeyHash
-} from '@/lib/utils';
+import { idToUrl, unixToDateTime, getCurrentDevicePublicKeyHash } from '@/lib/utils';
 import { ChatMessage, User } from '@/utils/types';
 import { NavLink } from 'react-router-dom';
 
@@ -13,21 +9,14 @@ type ChatPreviewProps = {
     userList: User[];
 };
 
-export const ChatPreview: React.FC<ChatPreviewProps> = ({
-    id,
-    chatRoomName,
-    messages,
-    userList
-}) => {
+export const ChatPreview: React.FC<ChatPreviewProps> = ({ id, chatRoomName, messages, userList }) => {
     // const user = userList.find(
     //     (user) => user.key === messages[messages?.length - 1]?.sender
     // );
 
     let user;
     if (messages?.length > 0) {
-        user = userList.find(
-            (user) => user.key === messages[messages?.length - 1]?.sender
-        );
+        user = userList.find((user) => user.key === messages[messages?.length - 1]?.sender);
     }
     return (
         <NavLink
@@ -35,9 +24,7 @@ export const ChatPreview: React.FC<ChatPreviewProps> = ({
             state={{ chatRoomName, userList }}
             className={({ isActive }) =>
                 `flex items-center gap-4 p-4 ${
-                    isActive
-                        ? 'bg-blue-200 text-blue-600'
-                        : 'transition-colors hover:bg-blue-100 hover:text-blue-500'
+                    isActive ? 'bg-blue-200 text-blue-600' : 'transition-colors hover:bg-blue-100 hover:text-blue-500'
                 }`
             }
         >
@@ -54,21 +41,14 @@ export const ChatPreview: React.FC<ChatPreviewProps> = ({
                     <span className="font-semibold">Chat: {chatRoomName}</span>
                     <div className="flex gap-1">
                         <span className="font-semibold">
-                            {getCurrentDevicePublicKeyHash() ===
-                            messages[messages.length - 1].sender
+                            {getCurrentDevicePublicKeyHash() === messages[messages.length - 1].sender
                                 ? 'You'
                                 : user?.username}
                             :
                         </span>
-                        <span className="italic">
-                            {messages[messages.length - 1].message}
-                        </span>
+                        <span className="italic">{messages[messages.length - 1].message}</span>
                     </div>
-                    <div>
-                        {unixToDateTime(
-                            messages[messages.length - 1].timestamp
-                        )}
-                    </div>
+                    <div>{unixToDateTime(messages[messages.length - 1].timestamp)}</div>
                 </div>
             )}
         </NavLink>

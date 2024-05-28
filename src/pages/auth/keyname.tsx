@@ -1,25 +1,10 @@
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
-} from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { signinSchema, SigninFormType } from '@/schema/signin.schema';
 import { Helmet } from 'react-helmet-async';
-import {
-    useLocation,
-    Form as ReactRouterForm,
-    useSubmit,
-    Link,
-    ActionFunction,
-    redirect
-} from 'react-router-dom';
+import { useLocation, Form as ReactRouterForm, useSubmit, Link, ActionFunction, redirect } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, LogIn } from 'lucide-react';
 import secretariumHandler from '@/utils/secretarium-handler';
@@ -52,10 +37,7 @@ export const SignIn = () => {
             </Helmet>
             <h1 className="p-4 text-2xl font-semibold">Chat App</h1>
             <Form {...form}>
-                <ReactRouterForm
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="max-w-80 space-y-4"
-                >
+                <ReactRouterForm onSubmit={form.handleSubmit(onSubmit)} className="max-w-80 space-y-4">
                     <FormField
                         control={form.control}
                         name="email"
@@ -63,15 +45,9 @@ export const SignIn = () => {
                             <FormItem>
                                 <FormLabel>Email address</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        placeholder="Type in your email"
-                                        disabled
-                                        {...field}
-                                    />
+                                    <Input placeholder="Type in your email" disabled {...field} />
                                 </FormControl>
-                                <FormDescription>
-                                    This is your public display name.
-                                </FormDescription>
+                                <FormDescription>This is your public display name.</FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -83,11 +59,7 @@ export const SignIn = () => {
                             <FormItem>
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        type="password"
-                                        placeholder="Type in your password"
-                                        {...field}
-                                    />
+                                    <Input type="password" placeholder="Type in your password" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -142,10 +114,7 @@ export const action: ActionFunction = async ({ request }) => {
             .then((key) => key.getRawPublicKey())
             .then((rawPublicKey) => Utils.hash(rawPublicKey))
             .then((hashPublicKey) => {
-                (window as any).currentDevicePublicKeyHash = Utils.toBase64(
-                    hashPublicKey,
-                    true
-                );
+                (window as any).currentDevicePublicKeyHash = Utils.toBase64(hashPublicKey, true);
                 base64key = Utils.toBase64(hashPublicKey, true);
                 return secretariumHandler.connect();
             })

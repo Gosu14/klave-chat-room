@@ -10,18 +10,13 @@ export function useChat(chatRoomId: string) {
         const getChat = async (): Promise<ChatResult> =>
             waitForConnection()
                 .then(() =>
-                    secretariumHandler.request(
-                        klaveContract,
-                        'getChat',
-                        { chatRoomId },
-                        `getChat-${Math.random()}`
-                    )
+                    secretariumHandler.request(klaveContract, 'getChat', { chatRoomId }, `getChat-${Math.random()}`)
                 )
                 .then(
                     (tx) =>
                         new Promise((resolve, reject) => {
                             tx.onResult((result) => {
-                                setData(result.messages)
+                                setData(result.messages);
                                 resolve(result);
                             });
                             tx.onError((error) => {

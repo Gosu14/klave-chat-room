@@ -34,7 +34,7 @@ export const Contacts = () => {
                 <title>Contacts | Chat App</title>
             </Helmet>
             <div className="flex flex-col p-4">
-                <h1 className="text-2xl font-semibold pb-8">Contacts</h1>
+                <h1 className="pb-8 text-2xl font-semibold">Contacts</h1>
                 <div className="flex flex-wrap gap-8">
                     {userList.map((user) => (
                         <UserPreview key={user.key} user={user} />

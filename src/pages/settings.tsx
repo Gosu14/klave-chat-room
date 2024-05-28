@@ -13,15 +13,7 @@ import {
 } from 'react-router-dom';
 import { ActionData, User } from '@/utils/types';
 import { Button } from '@/components/ui/button';
-import {
-    Form,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormControl,
-    FormDescription,
-    FormMessage
-} from '@/components/ui/form';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Check } from 'lucide-react';
 import { updateProfileSchema, UpdateProfileFormType } from '@/schema/updateProfile.schema';
@@ -60,10 +52,7 @@ export const Settings = () => {
     });
 
     const onSubmit = (data: any) => {
-        submit(
-            { ...data, chatRooms: user.chatRooms ?? [] },
-            { method: 'post' }
-        );
+        submit({ ...data, chatRooms: user.chatRooms ?? [] }, { method: 'post' });
     };
 
     return (
@@ -75,10 +64,7 @@ export const Settings = () => {
                 <h1 className=" pb-8 text-2xl font-semibold">Settings</h1>
                 <div className="flex flex-col">
                     <Form {...form}>
-                        <ReactRouterForm
-                            onSubmit={form.handleSubmit(onSubmit)}
-                            className="max-w-80 space-y-4"
-                        >
+                        <ReactRouterForm onSubmit={form.handleSubmit(onSubmit)} className="max-w-80 space-y-4">
                             <FormField
                                 control={form.control}
                                 name="username"
@@ -86,14 +72,9 @@ export const Settings = () => {
                                     <FormItem>
                                         <FormLabel>Username</FormLabel>
                                         <FormControl>
-                                            <Input
-                                                placeholder="Type in your username"
-                                                {...field}
-                                            />
+                                            <Input placeholder="Type in your username" {...field} />
                                         </FormControl>
-                                        <FormDescription>
-                                            This is your public display name.
-                                        </FormDescription>
+                                        <FormDescription>This is your public display name.</FormDescription>
                                         <FormMessage />
                                     </FormItem>
                                 )}
@@ -105,10 +86,7 @@ export const Settings = () => {
                                     <FormItem>
                                         <FormLabel>Email address</FormLabel>
                                         <FormControl>
-                                            <Input
-                                                placeholder="Type in your email address"
-                                                {...field}
-                                            />
+                                            <Input placeholder="Type in your email address" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -121,10 +99,7 @@ export const Settings = () => {
                                     <FormItem>
                                         <FormLabel>Phone number</FormLabel>
                                         <FormControl>
-                                            <Input
-                                                placeholder="Type in your phone number"
-                                                {...field}
-                                            />
+                                            <Input placeholder="Type in your phone number" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -137,13 +112,9 @@ export const Settings = () => {
                         </ReactRouterForm>
                     </Form>
                     {result?.error ? (
-                        <span className="pt-4 text-red-500">
-                            {result?.message}
-                        </span>
+                        <span className="pt-4 text-red-500">{result?.message}</span>
                     ) : (
-                        <span className="pt-4 text-green-500">
-                            {result?.message}
-                        </span>
+                        <span className="pt-4 text-green-500">{result?.message}</span>
                     )}
                 </div>
             </div>

@@ -1,9 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import {
-    Settings,
-    loader as SettingsLoader,
-    action as UpdateUser
-} from '@/pages/settings';
+import { Settings, loader as SettingsLoader, action as UpdateUser } from '@/pages/settings';
 import { Chats, loader as ChatsLoader } from '@/pages/chats';
 import { ChatId } from '@/pages/chats/id';
 import { Contacts, loader as ContactsLoader } from '@/pages/contacts';

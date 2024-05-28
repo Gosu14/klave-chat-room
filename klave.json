@@ -1,8 +1,6 @@
 {
     "version": "1",
-    "branches": [
-        "*"
-    ],
+    "branches": ["*"],
     "applications": [
         {
             "name": "chat-room",

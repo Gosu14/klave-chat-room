@@ -27,12 +27,7 @@ export const isConnected = () => secretariumHandler.isConnected();
 export const isExistingUser = async (key: string): Promise<UserResult> =>
     waitForConnection()
         .then(() =>
-            secretariumHandler.request(
-                klaveContract,
-                'isExistingUser',
-                { key },
-                `isExistingUser-${Math.random()}`
-            )
+            secretariumHandler.request(klaveContract, 'isExistingUser', { key }, `isExistingUser-${Math.random()}`)
         )
         .then(
             (tx) =>
@@ -49,14 +44,7 @@ export const isExistingUser = async (key: string): Promise<UserResult> =>
 
 export const getUser = async (key: string): Promise<UserResult> =>
     waitForConnection()
-        .then(() =>
-            secretariumHandler.request(
-                klaveContract,
-                'getUser',
-                { key },
-                `getChat-${Math.random()}`
-            )
-        )
+        .then(() => secretariumHandler.request(klaveContract, 'getUser', { key }, `getChat-${Math.random()}`))
         .then(
             (tx) =>
                 new Promise((resolve, reject) => {
@@ -72,14 +60,7 @@ export const getUser = async (key: string): Promise<UserResult> =>
 
 export const listUsers = async (): Promise<UserList> =>
     waitForConnection()
-        .then(() =>
-            secretariumHandler.request(
-                klaveContract,
-                'listUsers',
-                {},
-                `getChat-${Math.random()}`
-            )
-        )
+        .then(() => secretariumHandler.request(klaveContract, 'listUsers', {}, `getChat-${Math.random()}`))
         .then(
             (tx) =>
                 new Promise((resolve, reject) => {
@@ -95,14 +76,7 @@ export const listUsers = async (): Promise<UserList> =>
 
 export const getChat = async (chatRoomId: string): Promise<ChatResult> =>
     waitForConnection()
-        .then(() =>
-            secretariumHandler.request(
-                klaveContract,
-                'getChat',
-                { chatRoomId },
-                `getChat-${Math.random()}`
-            )
-        )
+        .then(() => secretariumHandler.request(klaveContract, 'getChat', { chatRoomId }, `getChat-${Math.random()}`))
         .then(
             (tx) =>
                 new Promise((resolve, reject) => {
@@ -118,14 +92,7 @@ export const getChat = async (chatRoomId: string): Promise<ChatResult> =>
 
 export const setUser = async (user: User): Promise<TransactionResult> =>
     waitForConnection()
-        .then(() =>
-            secretariumHandler.request(
-                klaveContract,
-                'setUser',
-                user,
-                `setChat-${Math.random()}`
-            )
-        )
+        .then(() => secretariumHandler.request(klaveContract, 'setUser', user, `setChat-${Math.random()}`))
         .then(
             (tx) =>
                 new Promise((resolve, reject) => {
@@ -142,12 +109,7 @@ export const setUser = async (user: User): Promise<TransactionResult> =>
 export const createChatRoom = async (input: ChatRoomCreationInput): Promise<CreateChatRoomResult> =>
     waitForConnection()
         .then(() =>
-            secretariumHandler.request(
-                klaveContract,
-                'createChatRoom',
-                input,
-                `createChatRoom-${Math.random()}`
-            )
+            secretariumHandler.request(klaveContract, 'createChatRoom', input, `createChatRoom-${Math.random()}`)
         )
         .then(
             (tx) =>
@@ -164,12 +126,69 @@ export const createChatRoom = async (input: ChatRoomCreationInput): Promise<Crea
 
 export const writeMessage = async (input: ChatMessageInput): Promise<TransactionResult> =>
     waitForConnection()
+        .then(() => secretariumHandler.request(klaveContract, 'writeMessage', input, `writeMessage-${Math.random()}`))
+        .then(
+            (tx) =>
+                new Promise((resolve, reject) => {
+                    tx.onResult((result) => {
+                        resolve(result);
+                    });
+                    tx.onError((error) => {
+                        reject(error);
+                    });
+                    tx.send().catch(reject);
+                })
+        );
+
+export const updateChatRoomName = async (chatRoomId: string, name: string): Promise<TransactionResult> =>
+    waitForConnection()
         .then(() =>
             secretariumHandler.request(
                 klaveContract,
-                'writeMessage',
-                input,
-                `writeMessage-${Math.random()}`
+                'updateChatRoomName',
+                { chatRoomId, name },
+                `updateChatRoomName-${Math.random()}`
+            )
+        )
+        .then(
+            (tx) =>
+                new Promise((resolve, reject) => {
+                    tx.onResult((result) => {
+                        resolve(result);
+                    });
+                    tx.onError((error) => {
+                        reject(error);
+                    });
+                    tx.send().catch(reject);
+                })
+        );
+
+export const leaveChatRoom = async (chatRoomId: string): Promise<TransactionResult> =>
+    waitForConnection()
+        .then(() =>
+            secretariumHandler.request(klaveContract, 'leaveChatRoom', { chatRoomId }, `leaveChatRoom-${Math.random()}`)
+        )
+        .then(
+            (tx) =>
+                new Promise((resolve, reject) => {
+                    tx.onResult((result) => {
+                        resolve(result);
+                    });
+                    tx.onError((error) => {
+                        reject(error);
+                    });
+                    tx.send().catch(reject);
+                })
+        );
+
+export const addChatRoomUsers = async (chatRoomId: string, additionalUsers: string[]): Promise<TransactionResult> =>
+    waitForConnection()
+        .then(() =>
+            secretariumHandler.request(
+                klaveContract,
+                'addChatRoomUsers',
+                { chatRoomId, additionalUsers },
+                `addChatRoomUsers-${Math.random()}`
             )
         )
         .then(

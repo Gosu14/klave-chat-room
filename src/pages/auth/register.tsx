@@ -2,15 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
-} from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { ChevronLeft, LogIn } from 'lucide-react';
 import {
@@ -27,7 +19,7 @@ import { setUser } from '@/utils/api';
 import { ActionData } from '@/utils/types';
 import { LOC_KEY } from '@/utils/constants';
 import { formSchema, FormType } from '@/schema/form.schema';
-import { urlToId } from "@/lib/utils";
+import { urlToId } from '@/lib/utils';
 
 export const Register = () => {
     const result = useActionData() as ActionData;
@@ -55,10 +47,7 @@ export const Register = () => {
             </Helmet>
             <h1 className="p-4 text-2xl font-semibold">Chat App</h1>
             <Form {...form}>
-                <ReactRouterForm
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="max-w-80 space-y-4"
-                >
+                <ReactRouterForm onSubmit={form.handleSubmit(onSubmit)} className="max-w-80 space-y-4">
                     <FormField
                         control={form.control}
                         name="username"
@@ -66,14 +55,9 @@ export const Register = () => {
                             <FormItem>
                                 <FormLabel>Username</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        placeholder="Type in your username"
-                                        {...field}
-                                    />
+                                    <Input placeholder="Type in your username" {...field} />
                                 </FormControl>
-                                <FormDescription>
-                                    This is your public display name.
-                                </FormDescription>
+                                <FormDescription>This is your public display name.</FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -85,10 +69,7 @@ export const Register = () => {
                             <FormItem>
                                 <FormLabel>Email address</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        placeholder="Type in your email address"
-                                        {...field}
-                                    />
+                                    <Input placeholder="Type in your email address" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -101,10 +82,7 @@ export const Register = () => {
                             <FormItem>
                                 <FormLabel>Phone number</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        placeholder="Type in your phone number"
-                                        {...field}
-                                    />
+                                    <Input placeholder="Type in your phone number" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -117,11 +95,7 @@ export const Register = () => {
                             <FormItem>
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        type="password"
-                                        placeholder="Type in your password"
-                                        {...field}
-                                    />
+                                    <Input type="password" placeholder="Type in your password" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -134,11 +108,7 @@ export const Register = () => {
                             <FormItem>
                                 <FormLabel>Confirm password</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        type="password"
-                                        placeholder="Type in your password"
-                                        {...field}
-                                    />
+                                    <Input type="password" placeholder="Type in your password" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -158,9 +128,7 @@ export const Register = () => {
                     </div>
                 </ReactRouterForm>
             </Form>
-            {result?.error ? (
-                <span className="pt-4 text-red-500">{result?.message}</span>
-            ) : null}
+            {result?.error ? <span className="pt-4 text-red-500">{result?.message}</span> : null}
         </>
     );
 };
@@ -210,19 +178,13 @@ export const action: ActionFunction = async ({ request }) => {
             const prevKeys = json ? JSON.parse(json) : [];
             const updatedKeys = [...prevKeys, encKey];
             const uniqueKeys = [...new Set(updatedKeys)];
-            window.localStorage.setItem(
-                localeStorageKey,
-                JSON.stringify(uniqueKeys)
-            );
+            window.localStorage.setItem(localeStorageKey, JSON.stringify(uniqueKeys));
             return Key.importEncryptedKeyPair(encKey, password);
         })
         .then((key) => key.getRawPublicKey())
         .then((rawPublicKey) => Utils.hash(rawPublicKey))
         .then((hashPublicKey) => {
-            (window as any).currentDevicePublicKeyHash = Utils.toBase64(
-                hashPublicKey,
-                true
-            );
+            (window as any).currentDevicePublicKeyHash = Utils.toBase64(hashPublicKey, true);
             base64key = Utils.toBase64(hashPublicKey, true);
             return secretariumHandler.connect();
         })

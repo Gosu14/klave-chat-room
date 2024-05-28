@@ -1,11 +1,5 @@
 import { User } from '@/utils/types';
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle
-} from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Send } from 'lucide-react';
 import { Label } from '@/components/ui/label';
@@ -14,11 +8,7 @@ import { createChatRoom } from '@/utils/api';
 import { getCurrentDevicePublicKeyHash } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 export const UserPreview: React.FC<{ user: User }> = ({ user }) => {
     const [error, setError] = useState<string | undefined>();
@@ -45,10 +35,7 @@ export const UserPreview: React.FC<{ user: User }> = ({ user }) => {
                     <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-200 p-2">
                         <UserSVG />
                     </div>
-                    {user.username}{' '}
-                    {user.key === getCurrentDevicePublicKeyHash()
-                        ? '(you)'
-                        : null}
+                    {user.username} {user.key === getCurrentDevicePublicKeyHash() ? '(you)' : null}
                 </CardTitle>
             </CardHeader>
             <CardContent>
@@ -56,11 +43,7 @@ export const UserPreview: React.FC<{ user: User }> = ({ user }) => {
                     <div className="grid w-full items-center gap-4">
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="phone">Phone number</Label>
-                            <Input
-                                id="phone"
-                                disabled
-                                value={user.phoneNumber}
-                            />
+                            <Input id="phone" disabled value={user.phoneNumber} />
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="email">Email address</Label>
@@ -71,16 +54,11 @@ export const UserPreview: React.FC<{ user: User }> = ({ user }) => {
             </CardContent>
             <CardFooter className="flex flex-col gap-2">
                 <Popover>
-                    <PopoverTrigger
-                        className="w-full"
-                        disabled={user.key === getCurrentDevicePublicKeyHash()}
-                    >
+                    <PopoverTrigger className="w-full" disabled={user.key === getCurrentDevicePublicKeyHash()}>
                         <Button
                             variant="secondary"
                             className="w-full"
-                            disabled={
-                                user.key === getCurrentDevicePublicKeyHash()
-                            }
+                            disabled={user.key === getCurrentDevicePublicKeyHash()}
                         >
                             <Send className="mr-2 h-4 w-4" /> Message
                         </Button>
@@ -88,7 +66,11 @@ export const UserPreview: React.FC<{ user: User }> = ({ user }) => {
                     <PopoverContent className="flex w-full flex-col space-y-4">
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="chatName">Chat name</Label>
-                            <Input id="email" placeholder="Type in chat name" onChange={(e) => setChatName(e.target.value)} />
+                            <Input
+                                id="email"
+                                placeholder="Type in chat name"
+                                onChange={(e) => setChatName(e.target.value)}
+                            />
                         </div>
                         <Button className="w-full" onClick={handleCreateChat}>
                             Create chat room

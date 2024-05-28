@@ -1,9 +1,5 @@
 import { useCallback } from 'react';
-import {
-    useDropzone,
-    DropzoneRootProps,
-    DropzoneInputProps
-} from 'react-dropzone';
+import { useDropzone, DropzoneRootProps, DropzoneInputProps } from 'react-dropzone';
 import { Card, CardContent } from '@/components/ui/card';
 import { KeyPair } from '@/utils/types';
 
@@ -12,7 +8,6 @@ type DropzoneProps = {
 };
 
 export const KeyDropzone: React.FC<DropzoneProps> = ({ onFileUpload }) => {
-
     const onDrop = useCallback(
         (acceptedFiles: File[]) => {
             const reader = new FileReader();

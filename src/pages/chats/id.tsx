@@ -40,9 +40,7 @@ export const ChatId = () => {
                             <ChevronLeft className="h-6 w-6" /> Back to chats
                         </Button>
                     </Link>
-                    <div className="flex items-center gap-2">
-                        Chat: {state.chatRoomName}
-                    </div>
+                    <div className="flex items-center gap-2">Chat: {state.chatRoomName}</div>
                 </div>
                 <div className="flex h-auto max-h-full flex-1 flex-col gap-2 overflow-auto p-4">
                     {messages.map((m, i) => (
@@ -50,10 +48,7 @@ export const ChatId = () => {
                     ))}
                 </div>
                 <div className="mt-auto flex-none p-4">
-                    <form
-                        className="flex flex-col gap-2"
-                        onSubmit={handleWriteMessage}
-                    >
+                    <form className="flex flex-col gap-2" onSubmit={handleWriteMessage}>
                         <Input
                             placeholder="Type your message here."
                             value={text}
