@@ -16,24 +16,25 @@ type LoaderResult = {
 };
 
 export const loader = async () => {
-    const key = getCurrentDevicePublicKeyHash();
     const isConnectedState = isConnected();
 
     if (!isConnectedState) {
         return redirect('/auth');
     }
 
-    const { success: getUserSuccess, user } = await getUser(key);
+    const key = getCurrentDevicePublicKeyHash();
+
+    const getUserResult = await getUser(key);
     const { success: listUsersSuccess, userList } = await listUsers();
 
     // TODO: handle error
-    if (!getUserSuccess || !listUsersSuccess) {
+    if (!getUserResult.success || !listUsersSuccess) {
         return {
             error: true,
             message: 'Something went wrong'
         };
     }
-    const chats = await Promise.all(user.chatRooms.map((chat) => getChat(chat)));
+    const chats = await Promise.all(getUserResult.user.chatRooms.map((chat) => getChat(chat)));
 
     return {
         chats,

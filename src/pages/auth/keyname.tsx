@@ -37,7 +37,7 @@ export const SignIn = () => {
             </Helmet>
             <h1 className="p-4 text-2xl font-semibold">Chat App</h1>
             <Form {...form}>
-                <ReactRouterForm onSubmit={form.handleSubmit(onSubmit)} className="max-w-80 space-y-4">
+                <ReactRouterForm onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <FormField
                         control={form.control}
                         name="email"
@@ -121,12 +121,12 @@ export const action: ActionFunction = async ({ request }) => {
             .catch(console.error);
     }
 
-    const { success } = await isExistingUser(urlToId(base64key));
+    const result = await isExistingUser(urlToId(base64key));
 
-    if (!success) {
+    if (!result.success) {
         return {
             error: true,
-            message: 'User does not exist.'
+            message: result.exception
         };
     }
 

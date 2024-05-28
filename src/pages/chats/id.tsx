@@ -4,7 +4,7 @@ import { writeMessage } from '@/utils/api';
 import { urlToId } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, Send } from 'lucide-react';
+import { ChevronLeft, Send, Pencil } from 'lucide-react';
 import { useState } from 'react';
 import { useChat } from '@/hooks/useChat';
 import { Message } from '@/components/message';
@@ -40,7 +40,14 @@ export const ChatId = () => {
                             <ChevronLeft className="h-6 w-6" /> Back to chats
                         </Button>
                     </Link>
-                    <div className="flex items-center gap-2">Chat: {state.chatRoomName}</div>
+                    <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2">Chat: {state.chatRoomName}</div>
+                        <Link to={`/chats/${chatId}/edit`} state={{ chatRoomName: state.chatRoomName }}>
+                            <Button className="rounded-full pr-4">
+                                <Pencil className="h-6 w-6 mr-2" /> Edit chat
+                            </Button>
+                        </Link>
+                    </div>
                 </div>
                 <div className="flex h-auto max-h-full flex-1 flex-col gap-2 overflow-auto p-4">
                     {messages.map((m, i) => (

@@ -19,22 +19,24 @@ import { Check } from 'lucide-react';
 import { updateProfileSchema, UpdateProfileFormType } from '@/schema/updateProfile.schema';
 
 export const loader = async () => {
-    const key = getCurrentDevicePublicKeyHash();
     const isConnectedState = isConnected();
 
     if (!isConnectedState) {
         return redirect('/auth');
     }
 
-    const { success, user } = await getUser(key);
+    const key = getCurrentDevicePublicKeyHash();
+    const result = await getUser(key);
 
-    if (success) {
-        return user;
+    if (!result.success) {
+        return {
+            error: true,
+            user: null,
+            message: result.exception
+        };
     }
-    // TODO: handle error
-    return {
-        user: null
-    };
+
+    return result.user
 };
 
 export const Settings = () => {
@@ -61,7 +63,7 @@ export const Settings = () => {
                 <title>Settings | Chat App</title>
             </Helmet>
             <div className="flex flex-col p-4">
-                <h1 className=" pb-8 text-2xl font-semibold">Settings</h1>
+                <h1 className="pb-8 text-2xl font-semibold">Settings</h1>
                 <div className="flex flex-col">
                     <Form {...form}>
                         <ReactRouterForm onSubmit={form.handleSubmit(onSubmit)} className="max-w-80 space-y-4">
@@ -143,7 +145,7 @@ export const action: ActionFunction = async ({ request }) => {
         return { error: true, message: 'Please fill in your phone number.' };
     }
 
-    const { success, exception } = await setUser({
+    const result = await setUser({
         key: getCurrentDevicePublicKeyHash(),
         username,
         email,
@@ -151,10 +153,10 @@ export const action: ActionFunction = async ({ request }) => {
         chatRooms
     });
 
-    if (!success) {
+    if (!result.success) {
         return {
             error: true,
-            message: exception
+            message: result.exception
         };
     }
 
