@@ -188,9 +188,7 @@ export const action: ActionFunction = async ({ request }) => {
     const chatRoomId = formData.get('id');
     const chatRoomName = formData.get('name');
     const userToAdd = formData.get('userToAdd');
-    const users = formData.getAll('users') as string[];
-
-    console.log(chatRoomId, chatRoomName, users, userToAdd);
+    //const users = formData.getAll('users') as [];
 
     if (typeof chatRoomName !== 'string') {
         return { error: true, message: 'Please fill in chat room name.' };
@@ -200,8 +198,10 @@ export const action: ActionFunction = async ({ request }) => {
         return { error: true, message: 'Invalid chat room id.' };
     }
 
-    const additionalUsersList = [userToAdd] as string[];
+    // remove empty strings from array
+    const additionalUsersList = [userToAdd].filter((n) => n) as string[];
 
+    console.log(additionalUsersList);
     const editChatRoomNameResult = await updateChatRoomName(chatRoomId, chatRoomName);
     const addUserResult = await addChatRoomUsers(chatRoomId, additionalUsersList);
 

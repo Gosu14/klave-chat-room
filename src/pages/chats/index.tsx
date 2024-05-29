@@ -34,6 +34,7 @@ export const loader = async () => {
             message: 'Something went wrong'
         };
     }
+    console.log(getUserResult.user);
     const chats = await Promise.all(getUserResult.user.chatRooms.map((chat) => getChat(chat)));
 
     return {
@@ -44,7 +45,7 @@ export const loader = async () => {
 
 export const Chats = () => {
     const { userList, chats } = useLoaderData() as LoaderResult;
-
+console.log('CHATS', chats);
     return (
         <>
             <Helmet>

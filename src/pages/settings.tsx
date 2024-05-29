@@ -36,7 +36,7 @@ export const loader = async () => {
         };
     }
 
-    return result.user
+    return result.user;
 };
 
 export const Settings = () => {
@@ -129,7 +129,7 @@ export const action: ActionFunction = async ({ request }) => {
     const username = formData.get('username');
     const email = formData.get('email');
     const phoneNumber = formData.get('phoneNumber');
-    const chatRooms = formData.getAll('chatRooms') as string[];
+    const chats = formData.getAll('chatRooms') as string[];
 
     if (typeof username !== 'string') {
         return { error: true, message: 'Please fill in your username.' };
@@ -142,6 +142,9 @@ export const action: ActionFunction = async ({ request }) => {
     if (typeof phoneNumber !== 'string') {
         return { error: true, message: 'Please fill in your phone number.' };
     }
+
+    // remove empty strings from array
+    const chatRooms = chats.filter((n) => n);
 
     const result = await setUser({
         key: getCurrentDevicePublicKeyHash(),
