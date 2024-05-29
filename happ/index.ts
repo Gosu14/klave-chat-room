@@ -241,7 +241,7 @@ export function updateChatRoomName(input: ChatRoomNameInput): void {
     if (input.name !== "") {
         chatRoomSettingObj.name = input.name
         Notifier.sendJson<SuccessOutput>({
-            success: false,
+            success: true,
             message: "Chatroom name has been updated"
         });
         return;
