@@ -30,11 +30,11 @@ On top of these basic functionalities, it also showcases the use of bots that ca
 
 ## Features
 
--   **Register your user:**
--   **Create chat room:**
--   **Manage users of chat rooms:**
--   **Discuss:**
--   **Create new business functionalities !!**
+-   **Register your user**
+-   **Create a chat room**
+-   **Manage users of a chat rooms**
+-   **Discuss**
+-   **Create new business functionalities**
 
 ## Deploy Your Own
 
