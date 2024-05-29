@@ -112,4 +112,5 @@ export type EditChatLoader = {
     id: string;
     name: string;
     users: string[];
+    userList: User[];
 };

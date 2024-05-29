@@ -42,7 +42,7 @@ export const ChatId = () => {
                     </Link>
                     <div className="flex items-center gap-2">
                         <div className="flex items-center gap-2">Chat: {state.chatRoomName}</div>
-                        <Link to={`/chats/${chatId}/edit`} state={{ chatRoomName: state.chatRoomName }}>
+                        <Link to={`/chats/${chatId}/edit`}>
                             <Button className="rounded-full pr-4">
                                 <Pencil className="h-6 w-6 mr-2" /> Edit chat
                             </Button>

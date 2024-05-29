@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Settings, loader as SettingsLoader, action as UpdateUser } from '@/pages/settings';
 import { Chats, loader as ChatsLoader } from '@/pages/chats';
 import { ChatId } from '@/pages/chats/id';
-import { EditChat, loader as EditChatLoader } from '@/pages/chats/edit';
+import { EditChat, loader as EditChatLoader, action as UpdateChat } from '@/pages/chats/edit';
 import { Contacts, loader as ContactsLoader } from '@/pages/contacts';
 import { Register, action as CreateUser } from '@/pages/auth/register';
 import { Home } from '@/pages/home';
@@ -44,7 +44,8 @@ const router = createBrowserRouter([
             {
                 path: 'chats/:chatId/edit',
                 element: <EditChat />,
-                loader: EditChatLoader
+                loader: EditChatLoader,
+                action: UpdateChat
             },
             {
                 path: 'contacts',

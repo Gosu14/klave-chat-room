@@ -131,8 +131,6 @@ export const action: ActionFunction = async ({ request }) => {
     const phoneNumber = formData.get('phoneNumber');
     const chatRooms = formData.getAll('chatRooms') as string[];
 
-    console.log(username, email, phoneNumber, chatRooms);
-
     if (typeof username !== 'string') {
         return { error: true, message: 'Please fill in your username.' };
     }
@@ -162,6 +160,6 @@ export const action: ActionFunction = async ({ request }) => {
 
     return {
         error: false,
-        message: 'Settings updated successfully'
+        message: 'Settings updated successfully.'
     };
 };

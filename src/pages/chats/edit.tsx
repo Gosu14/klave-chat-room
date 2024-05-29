@@ -4,18 +4,20 @@ import {
     LoaderFunction,
     redirect,
     useLoaderData,
-    useLocation,
     useNavigate,
     Form as ReactRouterForm,
-    useSubmit
+    useSubmit,
+    ActionFunction,
+    useActionData
 } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Check, ChevronLeft, CircleAlert } from 'lucide-react';
-import { getChatRoom, isConnected, leaveChatRoom } from '@/utils/api';
+import { addChatRoomUsers, getChatRoom, isConnected, leaveChatRoom, listUsers, updateChatRoomName } from '@/utils/api';
 import { urlToId } from '@/lib/utils';
-import { EditChatLoader } from '@/utils/types';
+import { ActionData, EditChatLoader } from '@/utils/types';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { updateChatRoomSchema, UpdateChatRoomFormType } from '@/schema/updateChatRoom.schema';
 import { toast } from 'sonner';
@@ -35,25 +37,34 @@ export const loader: LoaderFunction = async ({ params }) => {
         };
     }
 
-    const result = await getChatRoom(urlToId(chatId));
+    const getChatRoomResult = await getChatRoom(urlToId(chatId));
+    const listUsersResult = await listUsers();
 
-    if (!result.success) {
+    if (!getChatRoomResult.success) {
         return {
             error: true,
-            message: result.exception
+            message: getChatRoomResult.exception
+        };
+    }
+
+    if (!listUsersResult.success) {
+        return {
+            error: true,
+            message: 'Could not fetch user list.'
         };
     }
 
     return {
-        id: result.chatRoomId,
-        name: result.chatRoomSetting.name,
-        users: result.chatRoomSetting.users
+        id: getChatRoomResult.chatRoomId,
+        name: getChatRoomResult.chatRoomSetting.name,
+        users: getChatRoomResult.chatRoomSetting.users,
+        userList: listUsersResult.userList
     };
 };
 
 export const EditChat = () => {
+    const result = useActionData() as ActionData;
     const data = useLoaderData() as EditChatLoader;
-    const { state } = useLocation();
     const navigate = useNavigate();
     const submit = useSubmit();
 
@@ -62,7 +73,8 @@ export const EditChat = () => {
         defaultValues: {
             id: data.id,
             name: data.name,
-            users: data.users
+            users: data.users,
+            userToAdd: ''
         }
     });
 
@@ -93,7 +105,7 @@ export const EditChat = () => {
                     <Button className="rounded-full pr-4" onClick={() => navigate(-1)}>
                         <ChevronLeft className="h-6 w-6" /> Back to chat
                     </Button>
-                    <div className="flex items-center gap-2">Editing chat: {state.chatRoomName}</div>
+                    <div className="flex items-center gap-2">Editing chat: {data.name}</div>
                 </div>
                 <div className="flex h-full flex-col">
                     <Form {...form}>
@@ -112,12 +124,46 @@ export const EditChat = () => {
                                     </FormItem>
                                 )}
                             />
+                            <FormField
+                                control={form.control}
+                                name="userToAdd"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Contacts</FormLabel>
+                                        <Select onValueChange={field.onChange}>
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select a contact" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {data.userList.map((user) => (
+                                                    <SelectItem
+                                                        key={user.key}
+                                                        value={user.key}
+                                                        disabled={data.users.includes(user.key)}
+                                                    >
+                                                        {user.username} - {user.email}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        <FormDescription>Select a contact to add to this chat room.</FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                             <Button type="submit" className="w-full">
                                 <Check className="mr-2 h-4 w-4" />
                                 Update
                             </Button>
                         </ReactRouterForm>
                     </Form>
+                    {result?.error ? (
+                        <span className="p-4 text-red-500">{result?.message}</span>
+                    ) : (
+                        <span className="p-4 text-green-500">{result?.message}</span>
+                    )}
                     <div className="mt-auto flex flex-col gap-4 bg-red-200 p-4">
                         <h2 className="flex items-center gap-2 text-xl font-semibold text-red-800">
                             <CircleAlert />
@@ -135,4 +181,33 @@ export const EditChat = () => {
             </div>
         </>
     );
+};
+
+export const action: ActionFunction = async ({ request }) => {
+    const formData = await request.formData();
+    const chatRoomId = formData.get('id');
+    const chatRoomName = formData.get('name');
+    const userToAdd = formData.get('userToAdd');
+    const users = formData.getAll('users') as string[];
+
+    console.log(chatRoomId, chatRoomName, users, userToAdd);
+
+    if (typeof chatRoomName !== 'string') {
+        return { error: true, message: 'Please fill in chat room name.' };
+    }
+
+    if (typeof chatRoomId !== 'string') {
+        return { error: true, message: 'Invalid chat room id.' };
+    }
+
+    const newUsersList = [...users, userToAdd] as string[];
+
+    const editChatRoomNameResult = await updateChatRoomName(chatRoomId, chatRoomName);
+    const addUserResult = await addChatRoomUsers(chatRoomId, newUsersList);
+
+    if (editChatRoomNameResult.success && addUserResult.success) {
+        return { error: false, message: 'Chat room updated successfully.' };
+    }
+
+    return { error: true, message: 'Failed to edit chat room.' };
 };
