@@ -2,7 +2,6 @@ import { ClearKeyPair, EncryptedKeyPairV2, Key, SCP, Transaction, Utils } from '
 import { KeyPair } from '@/utils/types';
 
 interface SecretariumGatewayConfig {
-    key: string;
     gateways: Array<{
         endpoint: string;
         name: string;
@@ -35,11 +34,10 @@ const handlerStore: {
 const gatewaysConfigReducer = (config: SecretariumClusterConfig, current: string): SecretariumClusterConfig => {
     const record = current.split('#');
 
-    if (record.length !== 4) return config;
+    if (record.length !== 3) return config;
 
-    const [cluster, name, endpoint, key] = record as [string, string, string, string];
+    const [cluster, name, endpoint] = record as [string, string, string];
     config[cluster] = {
-        key,
         gateways: (config[cluster]?.gateways ?? []).concat([
             {
                 endpoint,
@@ -59,7 +57,6 @@ const printClusterInfo = (): void => {
 
     Object.entries(handlerStore.clusters).forEach(([name, configuration], cindex) => {
         printableConfig[`c${cindex}_name`] = name;
-        printableConfig[`c${cindex}_key`] = configuration.key;
         configuration.gateways.forEach((gateway, gindex) => {
             printableConfig[`c${cindex}_g${gindex}_name`] = gateway.name;
             printableConfig[`c${cindex}_g${gindex}_endpoint`] = gateway.endpoint;
@@ -163,7 +160,7 @@ const secretariumHandler = {
                 console.info('Klave Chat App now using the following gateway:', endpoint);
                 handlerStore.currentConnection
                     .reset()
-                    .connect(endpoint, handlerStore.currentKey, secretariumHandler.utils.fromBase64(cluster[1].key))
+                    .connect(endpoint, handlerStore.currentKey)
                     .then(() => {
                         resolve({
                             cluster: cluster[0],
