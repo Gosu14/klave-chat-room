@@ -387,8 +387,18 @@ export function addChatRoomUsers(input: ChatRoomAdditionalUsersInput): void {
     }
 
     for (let i=0;i<input.additionalUsers.length;i++) {
-        if (!chatRoomSettingObj.users.includes(input.additionalUsers[i])) {
-            chatRoomSettingObj.users.push(input.additionalUsers[i]);
+        const additionalUser = Ledger.getTable(users).get(input.additionalUsers[i]);
+        if (additionalUser.length > 0)
+        {
+            const additionalUserObj = JSON.parse<User>(additionalUser);
+            if (!additionalUserObj.chatRooms.includes(chatRoomId)) {
+                additionalUserObj.chatRooms.push(chatRoomId);
+                //update the user with the updated list of chatRoom
+                Ledger.getTable(users).set(additionalUserObj.key, JSON.stringify<User>(additionalUserObj));
+            }
+            if (!chatRoomSettingObj.users.includes(input.additionalUsers[i])) {
+                chatRoomSettingObj.users.push(input.additionalUsers[i]);
+            }
         }
     }
 

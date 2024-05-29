@@ -47,7 +47,6 @@
         "@vitejs/plugin-react": "^4.2.1",
         "as-base64": "0.2.0",
         "assemblyscript": "^0.27.26",
-        "assemblyscript-regex": "1.6.4",
         "autoprefixer": "^10.4.19",
         "eslint": "^8.55.0",
         "eslint-plugin-react-hooks": "^4.6.0",
