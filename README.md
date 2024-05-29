@@ -1,5 +1,5 @@
 <a href="https://klave.com/">
-  <img alt="Klave - Chat room" src="https://klave.com/images/marketplace/klave-chat-room.svg">
+  <img alt="Klave - Chat room" src="https://klave.com/images/marketplace/chat-room.svg">
   <h1 align="center">Chat room - Privacy and Programmability.</h1>
 </a>
 
@@ -50,7 +50,7 @@ You can build your template into wasm locally, allowing you to validate the hash
 
 ```bash
 yarn install
-yarn build-happ
+yarn build
 ```
 
 This will create the .wasm file in the ./klave folder.
@@ -61,9 +61,9 @@ Alongside the Klave Chat Room app, there is a simple UI app showcasing its usage
 
 -   Clone this repo
 -   Navigate to the UI app folder `cd /apps/ui`
--   Run `npm i` to install all the dependancies
+-   Run `yarn install` to install all the dependancies
 -   Change the variables `VITE_APP_KLAVE_CONTRACT` in the .env.local file of chat room app with the address of your honest application
--   Run `npm run dev` to spin up a dev server
+-   Run `yarn dev` to spin up a dev server
 
 ## Authors
 
