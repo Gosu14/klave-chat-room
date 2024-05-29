@@ -150,7 +150,7 @@ export function isExistingUser(input: UserKey): void {
         return;
     }
 
-    if (isUserRegistered(input.key)) return;
+    if (!isUserRegistered(input.key)) return;
     const user = Ledger.getTable(users).get(input.key);
 
     const userObj = JSON.parse<User>(user);
