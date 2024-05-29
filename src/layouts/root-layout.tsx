@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { SideNav } from '@/components/ui/side-nav';
 import { isConnected } from '@/utils/api';
+import { Toaster } from '@/components/ui/sonner';
 
 export const RootLayout = () => {
     const isConnectedState = isConnected();
@@ -16,6 +17,7 @@ export const RootLayout = () => {
             </div>
             <div className="col-span-11 h-screen overflow-y-auto md:col-span-10">
                 <Outlet />
+                <Toaster />
             </div>
         </div>
     );

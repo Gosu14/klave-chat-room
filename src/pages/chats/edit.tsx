@@ -18,6 +18,7 @@ import { EditChatLoader } from '@/utils/types';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { updateChatRoomSchema, UpdateChatRoomFormType } from '@/schema/updateChatRoom.schema';
+import { toast } from 'sonner';
 
 export const loader: LoaderFunction = async ({ params }) => {
     const isConnectedState = isConnected();
@@ -74,6 +75,7 @@ export const EditChat = () => {
             .then((result) => {
                 if (result.success) {
                     navigate('/chats');
+                    toast('Successfully left chat room.');
                 }
             })
             .catch((error) => {
