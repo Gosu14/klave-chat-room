@@ -200,10 +200,10 @@ export const action: ActionFunction = async ({ request }) => {
         return { error: true, message: 'Invalid chat room id.' };
     }
 
-    const newUsersList = [...users, userToAdd] as string[];
+    const additionalUsersList = [userToAdd] as string[];
 
     const editChatRoomNameResult = await updateChatRoomName(chatRoomId, chatRoomName);
-    const addUserResult = await addChatRoomUsers(chatRoomId, newUsersList);
+    const addUserResult = await addChatRoomUsers(chatRoomId, additionalUsersList);
 
     if (editChatRoomNameResult.success && addUserResult.success) {
         return { error: false, message: 'Chat room updated successfully.' };
