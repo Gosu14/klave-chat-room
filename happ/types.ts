@@ -1,6 +1,18 @@
 import { JSON } from '@klave/sdk';
 
 @serializable
+export class SuccessOutput {
+    success!: boolean;
+    message!: string;
+}
+
+@serializable
+export class ErrorOutput {
+    success!: boolean;
+    exception!: string;
+}
+
+@serializable
 export class ChatMessageInput {
     chatRoom!: string;
     message!: string;
@@ -35,12 +47,6 @@ export class ClearChatOutput {
 }
 
 @serializable
-export class KVInput {
-    key!: string;
-    value!: string;
-}
-
-@serializable
 export class User {
     key!: string;
     username!: string;
@@ -72,14 +78,20 @@ export class UserOutputList {
 }
 
 @serializable
-export class ErrorOutput {
-    success!: boolean;
-    exception!: string;
+export class ChatRoomId {
+    chatRoomId!: string;
 }
 
 @serializable
-export class ChatRoomId {
+export class ChatRoomNameInput {
     chatRoomId!: string;
+    name!: string;
+}
+
+@serializable
+export class ChatRoomAdditionalUsersInput {
+    chatRoomId!: string;
+    additionalUsers!: string[];
 }
 
 @serializable
@@ -91,6 +103,11 @@ export class ChatRoomSetting {
 @serializable
 export class ChatRoomOutput {
     success!: boolean;
-    name!: string;
-    chatRoomIdentification!: string;
+    chatRoomId!: string;
+    chatRoomSetting!: ChatRoomSetting;
+}
+
+@serializable
+export class StringOutput {
+    output!: string;
 }

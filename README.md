@@ -34,7 +34,7 @@ On top of these basic functionalities, it also showcases the use of bots that ca
 -   **Create chat room:**
 -   **Manage users of chat rooms:**
 -   **Discuss:**
--   **Create new business functionalities through your own Chat bots:**
+-   **Create new business functionalities !!**
 
 ## Deploy Your Own
 
@@ -42,7 +42,7 @@ You can deploy your own version of the Klave Chat room to Klave with one click:
 
 [![Deploy on Klave](https://klave.com/images/deploy-on-klave.svg)](https://app.klave.com/template/github/secretarium/klave-chat-room)
 
-## Build Locally
+## Build Locally your Honest App
 
 You can build your template into wasm locally, allowing you to validate the hash of the application deployed on Klave.
 
@@ -50,7 +50,7 @@ You can build your template into wasm locally, allowing you to validate the hash
 
 ```bash
 yarn install
-yarn build
+yarn build-happ
 ```
 
 This will create the .wasm file in the ./klave folder.
