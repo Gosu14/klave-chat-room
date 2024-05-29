@@ -216,7 +216,7 @@ export function createChatRoom(input: ChatRoomSetting): void {
 export function updateChatRoomName(input: ChatRoomNameInput): void {
 
     const clientId = Context.get('sender');
-    const chatRoomId = input.chatRoomId; 
+    const chatRoomId = input.chatRoomId;
 
     const tableChatRooms = Ledger.getTable(chatRoomIds);
 
