@@ -60,7 +60,6 @@ This will create the .wasm file in the ./klave folder.
 Alongside the Klave Chat Room app, there is a simple UI app showcasing its usage. The UI is written with [React](https://react.dev/), [React Router](https://reactrouter.com/en/main) and [TypeScript](https://www.typescriptlang.org/docs/). To run the app, follow the steps:
 
 -   Clone this repo
--   Navigate to the UI app folder `cd /apps/ui`
 -   Run `yarn install` to install all the dependancies
 -   Change the variables `VITE_APP_KLAVE_CONTRACT` in the .env.local file of chat room app with the address of your honest application
 -   Run `yarn dev` to spin up a dev server
