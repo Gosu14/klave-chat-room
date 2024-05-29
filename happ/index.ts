@@ -19,7 +19,7 @@ import {
     ChatRoomAdditionalUsersInput
 } from './types';
 import { encode } from 'as-base64/assembly';
-import { convertToUint8Array, getDate } from './utils';
+import { convertToUint8Array, getDate, isUserRegistered } from './utils';
 
 const chatRoomIds = 'chatRoomIdentificationTable';
 const chatRoom = 'chatRoomTable';
@@ -28,16 +28,16 @@ const users = 'usersTable';
 /**
  * @query
  */
-export function getUser(userKey: UserKey): void {
+export function getUser(input: UserKey): void {
+
     Subscription.setReplayStart();
-    const user = Ledger.getTable(users).get(userKey.key);
-    if (user.length === 0) {
-        Notifier.sendJson<ErrorOutput>({
-            success: false,
-            exception: "This user hasn't been registered"
-        });
-        return;
-    }
+
+    const clientId = Context.get('sender');
+    if (!isUserRegistered(clientId)) return;
+    if (!isUserRegistered(input.key)) return;
+
+    const user = Ledger.getTable(users).get(input.key);
+
     const userParsed = JSON.parse<User>(user);
     Notifier.sendJson<UserOutput>({
         success: true,
@@ -50,7 +50,11 @@ export function getUser(userKey: UserKey): void {
  * @query
  */
 export function listUsers(): void {
+
     Subscription.setReplayStart();
+    const clientId = Context.get('sender');
+    if (!isUserRegistered(clientId)) return;
+
     const tableUsers = Ledger.getTable(users);
     const keysList = tableUsers.get('keysList');
     const existingKeys = JSON.parse<string[]>(keysList);
@@ -74,7 +78,9 @@ export function listUsers(): void {
  * @transaction
  */
 export function setUser(input: User): void {
+
     const clientId = Context.get('sender');
+
     if (clientId !== input.key) {
         Notifier.sendJson<ErrorOutput>({
             success: false,
@@ -134,6 +140,7 @@ export function setUser(input: User): void {
  * @query
  */
 export function isExistingUser(input: UserKey): void {
+
     const clientId = Context.get('sender');
     if (clientId !== input.key) {
         Notifier.sendJson<ErrorOutput>({
@@ -143,14 +150,8 @@ export function isExistingUser(input: UserKey): void {
         return;
     }
 
+    if (isUserRegistered(input.key)) return;
     const user = Ledger.getTable(users).get(input.key);
-    if (user.length === 0) {
-        Notifier.sendJson<ErrorOutput>({
-            success: false,
-            exception: "This user doesn't exist"
-        });
-        return;
-    }
 
     const userObj = JSON.parse<User>(user);
     Notifier.sendJson<UserOutput>({
@@ -164,7 +165,10 @@ export function isExistingUser(input: UserKey): void {
  * @transaction
  */
 export function createChatRoom(input: ChatRoomSetting): void {
+
     const clientId = Context.get('sender');
+    if (!isUserRegistered(clientId)) return;
+
     const tableUsers = Ledger.getTable(users);
     const tableChatRooms = Ledger.getTable(chatRoomIds);
 
@@ -216,11 +220,12 @@ export function createChatRoom(input: ChatRoomSetting): void {
 export function updateChatRoomName(input: ChatRoomNameInput): void {
 
     const clientId = Context.get('sender');
+    if (!isUserRegistered(clientId)) return;
+
     const chatRoomId = input.chatRoomId;
-
     const tableChatRooms = Ledger.getTable(chatRoomIds);
-
     const chatRoomSetting = tableChatRooms.get(chatRoomId);
+
     if (chatRoomSetting.length === 0) {
         Notifier.sendJson<ErrorOutput>({
             success: false,
@@ -240,6 +245,8 @@ export function updateChatRoomName(input: ChatRoomNameInput): void {
 
     if (input.name !== "") {
         chatRoomSettingObj.name = input.name
+        //update the chat room name
+        tableChatRooms.set(chatRoomId, JSON.stringify<ChatRoomSetting>(chatRoomSettingObj));
         Notifier.sendJson<SuccessOutput>({
             success: true,
             message: "Chatroom name has been updated"
@@ -260,19 +267,12 @@ export function updateChatRoomName(input: ChatRoomNameInput): void {
 export function leaveChatRoom(input: ChatRoomId): void {
 
     const clientId = Context.get('sender');
-    const chatRoomId = input.chatRoomId;
+    if (!isUserRegistered(clientId)) return;
 
+    const chatRoomId = input.chatRoomId;
     const chatRoomTable = Ledger.getTable(chatRoomIds);
     const userTable = Ledger.getTable(users);
-
     const user = userTable.get(clientId);
-    if(user.length === 0) {
-        Notifier.sendJson<ErrorOutput>({
-            success: false,
-            exception: "This user hasn't been registered"
-        });
-        return;
-    }
 
     const chatRoomSetting = chatRoomTable.get(chatRoomId);
     if (chatRoomSetting.length === 0) {
@@ -317,21 +317,12 @@ export function leaveChatRoom(input: ChatRoomId): void {
 export function getChatRoom(input: ChatRoomId): void {
 
     const clientId = Context.get('sender');
+    if (!isUserRegistered(clientId)) return;
+
     const chatRoomId = input.chatRoomId;
-
     const chatRoomTable = Ledger.getTable(chatRoomIds);
-    const usersTable = Ledger.getTable(users);
-
-    const user = usersTable.get(clientId);
-    if(user.length === 0) {
-        Notifier.sendJson<ErrorOutput>({
-            success: false,
-            exception: "This user hasn't been registered"
-        });
-        return;
-    }
-
     const chatRoomSetting = chatRoomTable.get(chatRoomId);
+
     if (chatRoomSetting.length === 0) {
         Notifier.sendJson<ErrorOutput>({
             success: false,
@@ -365,8 +356,9 @@ export function getChatRoom(input: ChatRoomId): void {
 export function addChatRoomUsers(input: ChatRoomAdditionalUsersInput): void {
 
     const clientId = Context.get('sender');
-    const chatRoomId = input.chatRoomId;
+    if (!isUserRegistered(clientId)) return;
 
+    const chatRoomId = input.chatRoomId;
     const chatRoomTable = Ledger.getTable(chatRoomIds);
     const chatRoomSetting = chatRoomTable.get(chatRoomId);
     if (chatRoomSetting.length === 0) {
@@ -389,7 +381,7 @@ export function addChatRoomUsers(input: ChatRoomAdditionalUsersInput): void {
     if (input.additionalUsers.length === 0) {
         Notifier.sendJson<ErrorOutput>({
             success: false,
-            exception: "You don't have any additional users"
+            exception: "Input doesn't contain any additional users"
         });
         return;
     }
@@ -415,6 +407,8 @@ export function addChatRoomUsers(input: ChatRoomAdditionalUsersInput): void {
  */
 export function writeMessage(input: ChatMessageInput): void {
     const clientId = Context.get('sender');
+    if (!isUserRegistered(clientId)) return;
+
     const timestamp = getDate();
 
     const newMessage: ChatMessage = {
@@ -424,13 +418,6 @@ export function writeMessage(input: ChatMessageInput): void {
     };
 
     const user = Ledger.getTable(users).get(clientId);
-    if (user.length === 0) {
-        Notifier.sendJson<ErrorOutput>({
-            success: false,
-            exception: "User isn't registered"
-        });
-        return;
-    }
     const userObj = JSON.parse<User>(user);
     if (!userObj.chatRooms.includes(input.chatRoom)) {
         Notifier.sendJson<ErrorOutput>({
@@ -468,14 +455,9 @@ export function getChat(input: ChatRoomId): void {
     Subscription.setReplayStart();
 
     const clientId = Context.get('sender');
+    if (!isUserRegistered(clientId)) return;
+
     const user = Ledger.getTable(users).get(clientId);
-    if (user.length === 0) {
-        Notifier.sendJson<ErrorOutput>({
-            success: false,
-            exception: "This user hasn't been registered"
-        });
-        return;
-    }
     const userObj = JSON.parse<User>(user);
     if (!userObj.chatRooms.includes(input.chatRoomId)) {
         Notifier.sendJson<ErrorOutput>({
@@ -526,15 +508,9 @@ export function getChat(input: ChatRoomId): void {
  */
 export function clearChat(input: ChatRoomId): void {
     const clientId = Context.get('sender');
+    if (!isUserRegistered(clientId)) return;
 
     const user = Ledger.getTable(users).get(clientId);
-    if (user.length === 0) {
-        Notifier.sendJson<ErrorOutput>({
-            success: false,
-            exception: "User isn't registered"
-        });
-        return;
-    }
     const userObj = JSON.parse<User>(user);
     if (!userObj.chatRooms.includes(input.chatRoomId)) {
         Notifier.sendJson<ErrorOutput>({
