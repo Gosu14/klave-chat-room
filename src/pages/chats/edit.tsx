@@ -12,7 +12,7 @@ import {
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Check, ChevronLeft, CircleAlert } from 'lucide-react';
-import { getChatRoom, isConnected } from '@/utils/api';
+import { getChatRoom, isConnected, leaveChatRoom } from '@/utils/api';
 import { urlToId } from '@/lib/utils';
 import { EditChatLoader } from '@/utils/types';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
@@ -69,6 +69,18 @@ export const EditChat = () => {
         submit({ ...data }, { method: 'post' });
     };
 
+    const handleLeaveChat = () => {
+        leaveChatRoom(data.id)
+            .then((result) => {
+                if (result.success) {
+                    navigate('/chats');
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
     return (
         <>
             <Helmet>
@@ -113,7 +125,7 @@ export const EditChat = () => {
                             The actions listed below are either destructrive, leading to a loss of data or a loss of
                             permissions.
                         </p>
-                        <Button className="max-w-80" variant="destructive">
+                        <Button onClick={handleLeaveChat} className="w-56" variant="destructive">
                             Leave chat room
                         </Button>
                     </div>
