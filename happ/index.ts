@@ -13,7 +13,6 @@ import {
     UserOutput,
     ErrorOutput,
     UserOutputList,
-    StringOutput,
     SuccessOutput,
     ChatRoomNameInput,
     ChatRoomAdditionalUsersInput
