@@ -12,7 +12,6 @@
     },
     "dependencies": {
         "@hookform/resolvers": "^3.4.2",
-        "@klave/as-json": "^0.5.67-fix.0",
         "@radix-ui/react-label": "^2.0.2",
         "@radix-ui/react-popover": "^1.0.7",
         "@radix-ui/react-select": "^2.0.0",
@@ -39,8 +38,7 @@
         "zod": "^3.23.8"
     },
     "devDependencies": {
-        "@klave/sdk": "0.10.1",
-        "@klave/compiler": "0.3.3",
+        "@klave/sdk": "0.12.0",
         "@types/node": "^20.12.12",
         "@types/react": "^18.2.43",
         "@types/react-dom": "^18.2.17",
@@ -62,8 +60,5 @@
         "typescript": "^5.2.2",
         "visitor-as": "^0.11.4",
         "vite": "^5.0.8"
-    },
-    "resolutions": {
-        "**/@klave/compiler": "0.3.3"
     }
 }
