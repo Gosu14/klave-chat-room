@@ -27,6 +27,14 @@ const users = 'usersTable';
 /**
  * @query
  */
+export function ping(): void {
+    Notifier.sendString('pong');
+    return;
+}
+
+/**
+ * @query
+ */
 export function getUser(input: UserKey): void {
 
     Subscription.setReplayStart();
